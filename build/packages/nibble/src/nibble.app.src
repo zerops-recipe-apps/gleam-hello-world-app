@@ -1,0 +1,11 @@
+{application, nibble, [
+    {vsn, "1.1.1"},
+    {applications, [gleam_stdlib,
+                    gleeunit]},
+    {description, "A string parsing library combining a traditional lexer with parser combinators.."},
+    {modules, [nibble,
+               nibble@lexer,
+               nibble@pratt,
+               nibble@predicates]},
+    {registered, []}
+]}.

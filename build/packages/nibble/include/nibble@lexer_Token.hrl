@@ -1,0 +1,1 @@
+-record(token, {span :: nibble@lexer:span(), lexeme :: binary(), value :: any()}).

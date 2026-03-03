@@ -1,0 +1,14 @@
+name = "glenvy"
+version = "1.0.1"
+description = "A pleasant way to interact with your environment variables."
+licenses = ["MIT"]
+repository = { type = "github", user = "maxdeviant", repo = "glenvy" }
+
+[dependencies]
+gleam_stdlib = "~> 0.34 or ~> 1.0"
+gleam_erlang = "~> 0.25"
+nibble = "~> 1.1"
+simplifile = ">= 2.0.0 and < 3.0.0"
+
+[dev-dependencies]
+startest = ">= 0.2.2 and < 1.0.0"
