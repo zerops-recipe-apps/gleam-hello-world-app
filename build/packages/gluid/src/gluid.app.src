@@ -1,8 +1,0 @@
-{application, gluid, [
-    {vsn, "1.0.0"},
-    {applications, [gleam_stdlib,
-                    gleeunit]},
-    {description, "Generate Uuid for Gleam"},
-    {modules, [gluid]},
-    {registered, []}
-]}.

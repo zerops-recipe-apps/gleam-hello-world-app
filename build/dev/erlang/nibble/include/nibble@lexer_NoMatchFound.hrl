@@ -1,1 +1,0 @@
--record(no_match_found, {row :: integer(), col :: integer(), lexeme :: binary()}).
