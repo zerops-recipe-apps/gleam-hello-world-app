@@ -89,7 +89,7 @@ zerops:
         # Source-only deployment. Gleam packages are downloaded in
         # initCommands rather than here, avoiding build-container
         # permission issues when cached build/ directories are restored.
-        - true
+        - 'true'
       deployFiles:
         # Deploy source and config files. zerops.yaml included so
         # 'zcli push' works when SSHed into the dev container.
