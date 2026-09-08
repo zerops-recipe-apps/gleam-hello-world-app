@@ -4,7 +4,12 @@ zerops:
   # bundles all compiled modules with a launch script.
   - setup: prod
     build:
+      os: ubuntu
       base: gleam@1.5
+      prepareCommands:
+        # Gleam runs on Ubuntu only; plain ubuntu build images do not
+        # include the gleam CLI — install it before buildCommands run.
+        - zsc add gleam@1.5
       buildCommands:
         # Export a self-contained Erlang/OTP shipment — compiled BEAM
         # files for the app and all dependencies, with entrypoint.sh.
@@ -34,6 +39,7 @@ zerops:
       # Gleam's Erlang shipment requires an OTP runtime on the host —
       # the BEAM files are not statically linked. gleam@1.5 includes
       # Erlang/OTP 26, matching the build container exactly.
+      os: ubuntu
       base: gleam@1.5
 
       # Run migration once per deploy using execOnce — prevents race
@@ -63,7 +69,10 @@ zerops:
   # interactively after SSH.
   - setup: dev
     build:
+      os: ubuntu
       base: gleam@1.5
+      prepareCommands:
+        - zsc add gleam@1.5
       buildCommands:
         # Source-only deployment. Gleam packages are downloaded in
         # initCommands rather than here, avoiding build-container
@@ -79,6 +88,7 @@ zerops:
         - migrate.sh
 
     run:
+      os: ubuntu
       base: gleam@1.5
 
       # Download Hex packages and run migration once per deploy.
