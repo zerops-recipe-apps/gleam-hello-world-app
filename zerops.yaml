@@ -11,6 +11,9 @@ zerops:
         # include the gleam CLI — install it before buildCommands run.
         - zsc add gleam@1.5
       buildCommands:
+        # Clear stale compiled output while keeping cached Hex packages
+        # in build/packages/ (see build.cache).
+        - rm -rf build/erlang-shipment build/prod
         # Export a self-contained Erlang/OTP shipment — compiled BEAM
         # files for the app and all dependencies, with entrypoint.sh.
         - gleam export erlang-shipment
@@ -90,6 +93,10 @@ zerops:
     run:
       os: ubuntu
       base: gleam@1.5
+      prepareCommands:
+        # Runtime image is Ubuntu + OTP; ensure the gleam CLI is available
+        # for initCommands such as `gleam deps download` in dev setups.
+        - zsc add gleam@1.5
 
       # Download Hex packages and run migration once per deploy.
       # 'gleam deps download' populates build/packages/ so 'gleam run'
