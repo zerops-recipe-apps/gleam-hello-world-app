@@ -2,33 +2,21 @@
 # Run the Gleam migration module in the context of the Erlang shipment.
 # Loads all compiled BEAM files from the shipment and evaluates the
 # migrate module's main function, then stops the Erlang VM.
+#
+# Retry logic lives in src/migrate.gleam so connection errors are visible
+# in container logs. This wrapper only starts Erlang and surfaces failures.
 set -eu
 
 BASE=$(dirname "$0")
-MAX_ATTEMPTS=60
-DELAY_SECONDS=2
-ATTEMPT=1
 
-run_migration() {
-  erl \
-    -pa "$BASE"/*/ebin \
-    -eval 'app@@main:run(migrate)' \
-    -noshell \
-    -s init stop
-}
+echo "Starting Gleam migration via Erlang shipment..."
 
-while [ "$ATTEMPT" -le "$MAX_ATTEMPTS" ]; do
-  if run_migration; then
-    echo "Migration complete."
-    exit 0
-  fi
-
-  if [ "$ATTEMPT" -eq "$MAX_ATTEMPTS" ]; then
-    echo "Migration failed after ${MAX_ATTEMPTS} attempts."
-    exit 1
-  fi
-
-  echo "Database not ready (attempt ${ATTEMPT}/${MAX_ATTEMPTS}), retrying in ${DELAY_SECONDS}s..."
-  ATTEMPT=$((ATTEMPT + 1))
-  sleep "$DELAY_SECONDS"
-done
+if ! erl \
+  -pa "$BASE"/*/ebin \
+  -eval 'app@@main:run(migrate)' \
+  -noshell \
+  -s init stop
+then
+  echo "Migration failed — see Erlang output above for details." >&2
+  exit 1
+fi
