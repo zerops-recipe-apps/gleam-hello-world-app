@@ -6,7 +6,7 @@ Minimal Gleam web app (Wisp + Mist) running on the BEAM/Erlang VM, with PostgreS
 
 - HTTP port: `3000`
 - Siblings: `db` (PostgreSQL) — env: `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASS`, `DB_NAME`
-- Runtime base: `gleam@1.5`
+- Runtime base: `gleam@1.5` on **`ubuntu`** (Gleam is not available on Alpine)
 
 ## Zerops dev
 
