@@ -27,6 +27,8 @@ zerops:
     build:
       os: ubuntu
       base: gleam@1.5
+      prepareCommands:
+        - zsc add gleam@1.5
       buildCommands:
         # Export a self-contained Erlang/OTP shipment — compiled BEAM
         # files for the app and all dependencies, with entrypoint.sh.
@@ -88,6 +90,8 @@ zerops:
     build:
       os: ubuntu
       base: gleam@1.5
+      prepareCommands:
+        - zsc add gleam@1.5
       buildCommands:
         # Source-only deployment. Gleam packages are downloaded in
         # initCommands rather than here, avoiding build-container
